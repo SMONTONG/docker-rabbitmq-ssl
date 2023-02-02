@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  rabbitmq:
+    build:
+      context: .
+      target: rabbitmq-server
+    ports:
+      - "5672:5672"
+      - "5671:5671"
+      - "15671:15671"
+      - "15672:15672"
+    environment:
+      USER: admin
+      PASS: guest
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_net
+
+networks:
+  rabbitmq_net:
+    driver: bridge
