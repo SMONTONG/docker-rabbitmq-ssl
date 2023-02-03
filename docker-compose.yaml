@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   rabbitmq:
@@ -8,11 +8,10 @@ services:
     ports:
       - "5672:5672"
       - "5671:5671"
-      - "15671:15671"
       - "15672:15672"
     environment:
-      USER: admin
-      PASS: guest
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWORD: guest
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
