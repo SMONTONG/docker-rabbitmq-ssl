@@ -4,8 +4,8 @@ FROM rabbitmq:3-management-alpine AS rabbitmq-server
 # Set the author of the Dockerfile
 LABEL maintainer="Sonnarin MONTONG <contact@sonnarinmontong.fr>"
 
-ENV RABBITMQ_USER=${RABBITMQ_USER}:user
-ENV RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}:user
+ENV RABBITMQ_USER=${RABBITMQ_USER}:guest
+ENV RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}:guest
 ENV RABBITMQ_PID_FILE /var/lib/rabbitmq/mnesia/rabbitmq
 
 # Update the packages in Alpine Linux
@@ -15,7 +15,7 @@ RUN apk update && apk upgrade
 RUN apk add --no-cache openssl git python3 make && ln -sf python3 /usr/bin/python
 RUN git clone https://github.com/rabbitmq/tls-gen tls-gen
 RUN cd tls-gen/basic  \
-    && make PASSWORD= CN=localhost \
+    && make PASSWORD= CN=${HOSTNAME} \
     && make verify \
     && make info \
     && ls -l ./result
